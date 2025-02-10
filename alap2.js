@@ -5,8 +5,10 @@ for (let i = 0; i < 3; i++) {
         //console.log(i+" "+j)
         sz+=` 
         <img 
-            id="${szamlalo}"onmouseover="szegelyRajzol(this.id)" 
-            onmouseleave="szegelyLevesz(this.id)" onclick="nagyit(this.id)" 
+            id="${szamlalo}" 
+            onmouseover="szegelyRajzol(this.id)" 
+            onmouseleave="szegelyLevesz(this.id)" 
+            onclick="nagyit(this.id)" 
             src="a${szamlalo}.jpg" alt="" style="width:100px;margin:5px;border:2px solid white">`
         szamlalo++
     }
@@ -24,17 +26,20 @@ function nagyit(id){
     //alert(id)
     aktualisSorszam=id
     if (elozo!=-1){
-        document.getElementById(elozo).style.filter="invert(0%)"
-        document.getElementById(elozo).style.border="0px solid black"
+      document.getElementById(elozo).style.filter="invert(0%)"
+      document.getElementById(elozo).style.border="0px solid black"
     }
     document.getElementById(id).style.filter="invert(100%)"
     document.getElementById(id).style.border="2px solid green"
 
     elozo=id
+
     document.getElementById("nagyKep").innerHTML=`
     <img src="a${id}.jpg" alt="" style="width:640px">`
 
-
+    //tombből kiszedni az adatokat
+    //bekeverni
+    //gombra rátenni
     megoldas=nevekTomb[id].megoldas
     let keveres=[]
     keveres.push(nevekTomb[id].megoldas)
@@ -43,21 +48,20 @@ function nagyit(id){
     keveres.push(nevekTomb[id].tipp3)
     console.log(keveres)
     for (let i = 0; i < 100; i++) {
-        let rSzam1=Math.floor(Math.random() *4)
-        let rSzam2=Math.floor(Math.random() *4)
-        let csere=keveres[rSzam1]
-        keveres[rSzam1]=keveres[rSzam2]
-        keveres[rSzam2]=csere
-        //console.log(keveres)
-
-
+      let rSzam1=Math.floor( Math.random() *4)
+      let rSzam2=Math.floor( Math.random() *4)
+      //console.log(rSzam1+" "+rSzam2)
+      
+      let csere=keveres[rSzam1]
+      keveres[rSzam1]=keveres[rSzam2]
+      keveres[rSzam2]=csere
+      //console.log(keveres)
     }
 
 
-
-
-    document.getElementById("ki").innerHTML=
-        `Ki ez a híres személyiség?<br>
+    document.getElementById("ki").innerHTML=`
+    Ki ez a híres személyiség?
+    <br>
         <button onclick="gombKattint('${keveres[0]}')">${keveres[0]}</button>
         <button onclick="gombKattint('${keveres[1]}')">${keveres[1]}</button>
         <button onclick="gombKattint('${keveres[2]}')">${keveres[2]}</button>
@@ -70,29 +74,30 @@ function szegelyRajzol(id){
 }
 
 function szegelyLevesz(id){
-    if (id==aktualisSorszam) 
+    if (id==aktualisSorszam)
         document.getElementById(id).style.border="2px solid green"
-    else
+    else 
         document.getElementById(id).style.border="2px solid white"
 }
-function gombKattint(aktualisFelirat)
+function gombKattint(aktualisFelirat){
+    //alert(aktualisFelirat)
+    //alert(megoldas)
+    osszes++
+    if (megoldas==aktualisFelirat)
         {
-        //alert(aktualisFelirat)
-        if (megoldas==aktualisFelirat) 
-            {
-            helyes++;
-            alert("Helyes válasz!!") 
-                if(aktualisSorszam==nevekTomb.length-1)
-                    aktualisSorszam=0
-                else
-                    aktualisSorszam++
-            nagyit(aktualisSorszam)
+        helyes++;
+        alert("Helyes válasz!!!")
+            if (aktualisSorszam==nevekTomb.length-1)
+                aktualisSorszam=0
+            else
+                aktualisSorszam++
+        nagyit(aktualisSorszam)    
         }
     else
-        alert("Rossz válasz!!")
+        alert("Rossz válasz!!!")
 
-    document.getElementById("pontHelye").innerHTML=`Pontok: <b> ${helyes}/${osszes} ${Math.round( 100*helyes/osszes,0) }% </b>`
-    
+     
+    document.getElementById("pontHelye").innerHTML=`Pontok: <b> ${helyes}/${osszes} ${ Math.round( 100*helyes/osszes,0 )  }% </b>`
     //alert(aktualisSorszam)
-    
+
 }
